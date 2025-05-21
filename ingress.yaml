@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mediaserver
+  namespace: mediaserver
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: traefik-external
+  rules:
+  - host: irc.farh.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name:  thelounge
+            port:
+              number: 9000
+
+  tls:
+  - hosts:
+    - irc.farh.net
+    secretName: irc-tls
