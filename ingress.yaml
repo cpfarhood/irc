@@ -5,6 +5,8 @@ metadata:
   namespace: mediaserver
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/hostname: "irc.farh.net"
+    external-dns.alpha.kubernetes.io/target: "108.254.166.31"
 spec:
   ingressClassName: traefik-external
   rules:
