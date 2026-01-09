@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/hostname: "irc.farh.net"
-    external-dns.alpha.kubernetes.io/target: "71.150.236.210"
+    external-dns.alpha.kubernetes.io/target: "108.254.166.31"
 spec:
   ingressClassName: traefik-external
   rules:
