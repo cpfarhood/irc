@@ -1,4 +1,5 @@
 apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: irc
@@ -8,8 +9,12 @@ spec:
     matchExpressions:
       - key: app.kubernetes.io/name
         operator: In
-        values: [znc, thelounge]
-  policyTypes: [Ingress, Egress]
+        values:
+          - znc
+          - thelounge
+  policyTypes:
+    - Ingress
+    - Egress
 
   ingress:
     - from:
