@@ -17,16 +17,20 @@ spec:
     - Egress
 
   ingress:
-    # Allow traffic only from pods in the same namespace
+    # Allow all in-namespace traffic (includes Service -> Pod, Gateway -> Service -> Pod)
     - from:
-        - podSelector: {}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: irc
 
   egress:
-    # Allow traffic to pods in the same namespace
+    # Allow in-namespace pod communication
     - to:
-        - podSelector: {}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: irc
 
-    # Allow traffic to public internet (RFC1918 explicitly blocked)
+    # Allow public internet only (block RFC1918)
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
