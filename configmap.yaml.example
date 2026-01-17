@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: irc
+  namespace: irc
+data:
+  THELOUNGE_HOSTNAME: irc.yourdomain.com
+  ZNC_HOSTNAME: znc.yourdomain.com
