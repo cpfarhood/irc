@@ -4,6 +4,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: znc
+  annotations:
+    polaris.fairwinds.com/runAsRootAllowed-exempt: "true" # linuxserver.io images don't support this, need to build my own
 spec:
   selector:
     matchLabels:
@@ -21,7 +23,6 @@ spec:
         image: lscr.io/linuxserver/znc:latest    
         securityContext:
           allowPrivilegeEscalation: false
-          runAsNonRoot: true
         ports:
         - containerPort: 6501
           name: irc-6501
