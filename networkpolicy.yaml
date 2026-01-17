@@ -8,29 +8,28 @@ spec:
     matchExpressions:
       - key: app.kubernetes.io/name
         operator: In
-        values:
-          - znc
-          - thelounge
-
-  policyTypes:
-    - Ingress
-    - Egress
+        values: [znc, thelounge]
+  policyTypes: [Ingress, Egress]
 
   ingress:
-    # Allow all in-namespace traffic (includes Service -> Pod, Gateway -> Service -> Pod)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: irc
 
   egress:
-    # Allow in-namespace pod communication
+    # namespace-local
     - to:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: irc
 
-    # Allow public internet only (block RFC1918)
+    # explicitly allowed home LAN
+    - to:
+        - ipBlock:
+            cidr: 192.168.195.0/24
+
+    # public internet only
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
