@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: thelounge
-      app.kubernetes.io/instance: thelounge
   serviceName: "thelounge"
   replicas: 1
   template:
