@@ -6,6 +6,8 @@ metadata:
   name: znc
   annotations:
     polaris.fairwinds.com/runAsRootAllowed-exempt: "true" # linuxserver.io images don't support this, need to build my own
+    polaris.fairwinds.com/tagNotSpecified-exempt: "true" # allow latest tag for this app
+    polaris.fairwinds.com/topologySpreadConstraint-exempt: "true" # statefulset doesn't support multiple replicas
 spec:
   selector:
     matchLabels:
@@ -16,8 +18,10 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: znc
+        app.kubernetes.io/instance: znc
     spec:
       priorityClassName: low-priority
+      automountServiceAccountToken: false
       containers:
       - name: znc
         image: lscr.io/linuxserver/znc:latest    
@@ -32,9 +36,10 @@ spec:
         resources:
           requests:
             memory: "256Mi"
-            cpu: "250m"
+            cpu: "100m"
           limits:
             memory: "512Mi"
+            cpu: "500m"
   volumeClaimTemplates:
   - metadata:
       name: config
