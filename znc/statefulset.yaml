@@ -1,17 +1,16 @@
-## StatefulSet
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: znc
   annotations:
-    polaris.fairwinds.com/runAsRootAllowed-exempt: "true" # linuxserver.io images don't support this, need to build my own
-    polaris.fairwinds.com/tagNotSpecified-exempt: "true" # allow latest tag for this app
-    polaris.fairwinds.com/topologySpreadConstraint-exempt: "true" # statefulset doesn't support multiple replicas
+    polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
+    polaris.fairwinds.com/tagNotSpecified-exempt: "true"
+    polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: znc
+      app.kubernetes.io/instance: znc
   serviceName: "znc"
   replicas: 1
   template:
@@ -23,28 +22,56 @@ spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
       containers:
-      - name: znc
-        image: lscr.io/linuxserver/znc:latest    
-        securityContext:
-          allowPrivilegeEscalation: false
-        ports:
-        - containerPort: 6501
-          name: irc-6501
-        volumeMounts:
-        - name: config
-          mountPath: "/app/config"
+        - name: znc
+          image: lscr.io/linuxserver/znc:latest
+
+          ports:
+            - containerPort: 6501
+              name: irc-6501
+
+          securityContext:
+            runAsNonRoot: false
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+
+          volumeMounts:
+            - name: config
+              mountPath: "/app/config"
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          livenessProbe:
+            tcpSocket:
+              port: 6501
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          readinessProbe:
+            tcpSocket:
+              port: 6501
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+  volumeClaimTemplates:
+    - metadata:
+        name: config
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            memory: "256Mi"
-            cpu: "100m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-  volumeClaimTemplates:
-  - metadata:
-      name: config
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 4Gi
+            storage: 4Gi
