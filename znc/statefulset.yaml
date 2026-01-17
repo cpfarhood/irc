@@ -33,8 +33,6 @@ spec:
             runAsNonRoot: false
             allowPrivilegeEscalation: false
             privileged: false
-            capabilities:
-              drop: ["ALL"]
 
           volumeMounts:
             - name: config
