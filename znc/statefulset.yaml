@@ -35,8 +35,6 @@ spec:
             privileged: false
             capabilities:
               drop: ["ALL"]
-            seccompProfile:
-              type: RuntimeDefault
 
           volumeMounts:
             - name: config
