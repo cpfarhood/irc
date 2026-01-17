@@ -1,16 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: irc
+  name: znc
   namespace: irc
 spec:
   podSelector:
-    matchExpressions:
-      - key: app.kubernetes.io/name
-        operator: In
-        values:
-          - znc
-          - thelounge
+    matchLabels:
+      app.kubernetes.io/name: znc
   policyTypes:
     - Ingress
     - Egress
