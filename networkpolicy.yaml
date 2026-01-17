@@ -13,15 +13,8 @@ spec:
 
   ingress:
     - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: irc
-              
-    # explicitly allowed home LAN
-    - from:
         - ipBlock:
-            cidr: 192.168.195.0/24
-
+            cidr: 0.0.0.0/0
 
   egress:
     # namespace-local
