@@ -14,10 +14,15 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: thelounge
+        app.kubernetes.io/instance: thelounge
     spec:
+      priorityClassName: low-priority
       containers:
       - name: thelounge
         image: ghcr.io/thelounge/thelounge:latest
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
         ports:
         - containerPort: 9000
           name: http-9000
