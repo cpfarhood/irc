@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
 # Uncomment if storing configuration in the repo
 # - configmap.yaml
-  - networkpolicy.yaml
   - ./thelounge
   - ./znc

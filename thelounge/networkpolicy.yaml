@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: thelounge
+  namespace: irc
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: thelounge
+  policyTypes:
+    - Ingress
+    - Egress
+
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: irc
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: istio-system
+
+  egress:
+    # namespace-local
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: irc
+
+    # public internet only
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
