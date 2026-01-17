@@ -1,0 +1,16 @@
+## Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: znc
+  labels:
+    app.kubernetes.io/name: znc
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ${ZNC_HOSTNAME}
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 6501
+  selector:
+    app.kubernetes.io/name: znc
