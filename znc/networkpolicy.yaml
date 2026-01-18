@@ -11,23 +11,40 @@ spec:
     - Egress
 
   ingress:
+  ### Allow intra-namespace communication
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: irc
+  ###
+  ### Allow traffic from gateways
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: istio-system
-
+  ###
   egress:
-    # namespace-local
+  ### Allow DNS resolution
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+  ###
+  ### Allow intra-namespace communication
     - to:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: irc
-
-    # public internet only
+  ###
+  ### Allow outbound to the world
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
@@ -35,3 +52,4 @@ spec:
               - 10.0.0.0/8
               - 172.16.0.0/12
               - 192.168.0.0/16
+  ###
