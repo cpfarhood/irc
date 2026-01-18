@@ -1,5 +1,3 @@
-## StatefulSet
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -8,16 +6,16 @@ metadata:
     app.kubernetes.io/name: thelounge
     app.kubernetes.io/instance: thelounge
   annotations:
-    polaris.fairwinds.com/runAsRootAllowed-exempt: "true" # linuxserver.io images don't support this, need to build my own
-    polaris.fairwinds.com/tagNotSpecified-exempt: "true" # allow latest tag for this app
-    polaris.fairwinds.com/topologySpreadConstraint-exempt: "true" # statefulset doesn't support multiple replicas
+    polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
+    polaris.fairwinds.com/tagNotSpecified-exempt: "true"
+    polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
 spec:
+  serviceName: thelounge
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: thelounge
       app.kubernetes.io/instance: thelounge
-  serviceName: "thelounge"
-  replicas: 1
   template:
     metadata:
       labels:
@@ -36,19 +34,34 @@ spec:
           name: http-9000
         volumeMounts:
         - name: config
-          mountPath: "/var/opt/thelounge"
+          mountPath: /var/opt/thelounge
         resources:
           requests:
-            memory: "256Mi"
             cpu: "100m"
+            memory: "256Mi"
           limits:
-            memory: "512Mi"
             cpu: "500m"
+            memory: "512Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 3
   volumeClaimTemplates:
   - metadata:
       name: config
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes:
+      - ReadWriteOnce
       resources:
         requests:
           storage: 4Gi
