@@ -22,7 +22,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: thelounge
-      app.kubernetes.io/instance: thelounge
+        app.kubernetes.io/instance: thelounge
     spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
