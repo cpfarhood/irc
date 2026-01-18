@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: znc
+  labels:
+    app.kubernetes.io/name: znc
+    app.kubernetes.io/instance: znc
   annotations:
     polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
     polaris.fairwinds.com/tagNotSpecified-exempt: "true"

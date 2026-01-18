@@ -4,6 +4,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: thelounge
+  labels:
+    app.kubernetes.io/name: thelounge
+    app.kubernetes.io/instance: thelounge
   annotations:
     polaris.fairwinds.com/runAsRootAllowed-exempt: "true" # linuxserver.io images don't support this, need to build my own
     polaris.fairwinds.com/tagNotSpecified-exempt: "true" # allow latest tag for this app
@@ -12,12 +15,14 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: thelounge
+      app.kubernetes.io/instance: thelounge
   serviceName: "thelounge"
   replicas: 1
   template:
     metadata:
       labels:
         app.kubernetes.io/name: thelounge
+      app.kubernetes.io/instance: thelounge
     spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
