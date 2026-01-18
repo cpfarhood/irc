@@ -5,3 +5,5 @@ resources:
 # - configmap.yaml
   - ./thelounge
   - ./znc
+# - ./bitlbee
+# - ./inspircd
