@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ CRITICAL: Flux CD Deployment
+
+**This repository is deployed via Flux CD.** All manifests use Flux variable substitution syntax (e.g., `${VARIABLE_NAME}`).
+
+**DO NOT replace Flux variables with hardcoded values.** Flux substitutes these variables at deployment time from ConfigMaps or Secrets.
+
 ## Project Overview
 
 This repository contains Kubernetes manifests for deploying IRC-related applications (The Lounge web client and ZNC bouncer) using Kustomize. The infrastructure is deployed to a Kubernetes cluster with Flux CD and uses Gitea Actions for CI/CD validation and security scanning.
