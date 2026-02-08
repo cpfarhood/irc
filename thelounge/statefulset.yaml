@@ -9,7 +9,6 @@ metadata:
     polaris.fairwinds.com/tagNotSpecified-exempt: "true"
     polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
 spec:
-  serviceName: thelounge
   replicas: 1
   selector:
     matchLabels:

@@ -40,7 +40,6 @@ jobs:
               --ignore-test container-security-context-readonlyrootfilesystem \
               --ignore-test container-image-tag \
               --ignore-test container-security-context-user-group-id \
-              --ignore-test statefulset-has-servicename \
               --ignore-test probe-not-identical \
               --output-format ci
           fi
