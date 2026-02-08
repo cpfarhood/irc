@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/name: znc
     app.kubernetes.io/instance: znc
   annotations:
-    polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
     polaris.fairwinds.com/tagNotSpecified-exempt: "true"
     polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
 spec:
@@ -24,6 +23,13 @@ spec:
     spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: znc
           image: lscr.io/linuxserver/znc:latest
@@ -33,9 +39,15 @@ spec:
               name: irc-6501
 
           securityContext:
-            runAsNonRoot: false
             allowPrivilegeEscalation: false
-            privileged: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
 
           volumeMounts:
             - name: config
@@ -45,9 +57,11 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "100m"
+              ephemeral-storage: "1Gi"
             limits:
               memory: "512Mi"
               cpu: "500m"
+              ephemeral-storage: "2Gi"
 
           livenessProbe:
             tcpSocket:

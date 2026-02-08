@@ -37,12 +37,8 @@ jobs:
             kubectl kustomize . | kube-score score - \
               --ignore-test pod-networkpolicy \
               --ignore-test deployment-has-poddisruptionbudget \
-              --ignore-test container-security-context-user-group-id \
               --ignore-test container-security-context-readonlyrootfilesystem \
-              --ignore-test statefulset-has-servicename \
               --ignore-test container-image-tag \
-              --ignore-test container-ephemeral-storage-request-and-limit \
-              --ignore-test probe-not-identical \
               --output-format ci
           fi
 
