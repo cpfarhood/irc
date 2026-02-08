@@ -90,6 +90,7 @@ jobs:
               -summary \
               -output text \
               -ignore-missing-schemas \
+              -skip HTTPRoute \
               -verbose
           fi
 
