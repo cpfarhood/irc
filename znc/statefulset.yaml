@@ -8,6 +8,8 @@ metadata:
   annotations:
     polaris.fairwinds.com/tagNotSpecified-exempt: "true"
     polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
+    polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
+    polaris.fairwinds.com/runAsPrivileged-exempt: "true"
 spec:
   selector:
     matchLabels:
@@ -22,31 +24,18 @@ spec:
     spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        seccompProfile:
-          type: RuntimeDefault
       containers:
         - name: znc
           image: lscr.io/linuxserver/znc:latest
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
 
           ports:
             - containerPort: 6501
               name: irc-6501
-
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-            capabilities:
-              drop:
-                - ALL
-            seccompProfile:
-              type: RuntimeDefault
 
           volumeMounts:
             - name: config
