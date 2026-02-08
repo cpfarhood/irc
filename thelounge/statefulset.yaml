@@ -6,11 +6,9 @@ metadata:
     app.kubernetes.io/name: thelounge
     app.kubernetes.io/instance: thelounge
   annotations:
-    polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
     polaris.fairwinds.com/tagNotSpecified-exempt: "true"
     polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
 spec:
-  serviceName: thelounge
   replicas: 1
   selector:
     matchLabels:
@@ -24,11 +22,26 @@ spec:
     spec:
       priorityClassName: low-priority
       automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: thelounge
         image: ghcr.io/thelounge/thelounge:latest
         securityContext:
           allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault
         ports:
         - containerPort: 9000
           name: http-9000
@@ -39,11 +52,14 @@ spec:
           requests:
             cpu: "100m"
             memory: "256Mi"
+            ephemeral-storage: "1Gi"
           limits:
             cpu: "500m"
             memory: "512Mi"
+            ephemeral-storage: "2Gi"
         livenessProbe:
-          tcpSocket:
+          httpGet:
+            path: /
             port: 9000
           initialDelaySeconds: 20
           periodSeconds: 10
