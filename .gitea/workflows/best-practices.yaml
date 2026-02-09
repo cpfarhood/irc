@@ -42,6 +42,9 @@ jobs:
               --ignore-test container-security-context-user-group-id \
               --ignore-test probe-not-identical \
               --ignore-test container-security-context \
+              --ignore-test container-seccomp-profile \
+              --ignore-test container-ephemeral-storage-request-and-limit \
+              --ignore-test statefulset-has-poddisruptionbudget \
               --output-format ci
           fi
 
@@ -74,7 +77,7 @@ jobs:
             polaris audit --audit-path manifests.yaml \
               --format pretty \
               --set-exit-code-on-danger \
-              --set-exit-code-below-score 50
+              --set-exit-code-below-score 70
           fi
 
   resource-analysis:

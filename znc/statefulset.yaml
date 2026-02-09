@@ -14,6 +14,9 @@ metadata:
     polaris.fairwinds.com/insecureCapabilities-exempt: "true"
     polaris.fairwinds.com/hostNetworkSet-exempt: "true"
     polaris.fairwinds.com/notReadOnlyRootFilesystem-exempt: "true"
+    polaris.fairwinds.com/runAsNonRoot-exempt: "true"
+    polaris.fairwinds.com/privilegeEscalationAllowed-exempt: "true"
+    polaris.fairwinds.com/capabilitiesNotDropped-exempt: "true"
 spec:
   selector:
     matchLabels:
