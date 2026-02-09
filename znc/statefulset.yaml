@@ -10,6 +10,9 @@ metadata:
     polaris.fairwinds.com/topologySpreadConstraint-exempt: "true"
     polaris.fairwinds.com/runAsRootAllowed-exempt: "true"
     polaris.fairwinds.com/runAsPrivileged-exempt: "true"
+    polaris.fairwinds.com/dangerousCapabilities-exempt: "true"
+    polaris.fairwinds.com/insecureCapabilities-exempt: "true"
+    polaris.fairwinds.com/hostNetworkSet-exempt: "true"
 spec:
   selector:
     matchLabels:

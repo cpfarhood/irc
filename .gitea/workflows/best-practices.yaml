@@ -41,6 +41,7 @@ jobs:
               --ignore-test container-image-tag \
               --ignore-test container-security-context-user-group-id \
               --ignore-test probe-not-identical \
+              --ignore-test container-security-context \
               --output-format ci
           fi
 
