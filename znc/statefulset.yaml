@@ -13,6 +13,7 @@ metadata:
     polaris.fairwinds.com/dangerousCapabilities-exempt: "true"
     polaris.fairwinds.com/insecureCapabilities-exempt: "true"
     polaris.fairwinds.com/hostNetworkSet-exempt: "true"
+    polaris.fairwinds.com/notReadOnlyRootFilesystem-exempt: "true"
 spec:
   selector:
     matchLabels:

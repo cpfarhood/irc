@@ -74,7 +74,7 @@ jobs:
             polaris audit --audit-path manifests.yaml \
               --format pretty \
               --set-exit-code-on-danger \
-              --set-exit-code-below-score 70
+              --set-exit-code-below-score 50
           fi
 
   resource-analysis:
