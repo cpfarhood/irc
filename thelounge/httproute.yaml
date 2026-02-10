@@ -6,7 +6,7 @@ metadata:
 spec:
   parentRefs:
     - name: external
-      namespace: istio-system
+      namespace: gateway-system
   hostnames:
     - ${THELOUNGE_HOSTNAME}
   rules:
