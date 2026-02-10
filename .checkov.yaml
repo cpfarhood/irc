@@ -11,3 +11,5 @@ skip-check:
   - CKV_K8S_40  # Containers should run as high UID (ZNC LinuxServer container needs flexibility)
   - CKV_K8S_23  # Minimize admission of root containers (ZNC requires root for s6-overlay init)
   - CKV_K8S_20  # Containers should not run with allowPrivilegeEscalation (ZNC needs init flexibility)
+  - CKV_K8S_37  # Capabilities - drop ALL (ZNC needs flexible capabilities for init)
+  - CKV_K8S_38  # Ensure that Service Account Tokens are only mounted where necessary (already set to false)

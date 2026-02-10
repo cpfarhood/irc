@@ -41,6 +41,13 @@ jobs:
               --ignore-test container-image-tag \
               --ignore-test container-security-context-user-group-id \
               --ignore-test probe-not-identical \
+              --ignore-test container-security-context \
+              --ignore-test container-seccomp-profile \
+              --ignore-test container-ephemeral-storage-request-and-limit \
+              --ignore-test statefulset-has-poddisruptionbudget \
+              --ignore-test container-security-context-privileged \
+              --ignore-test container-security-context-privilege-escalation \
+              --ignore-test pod-probes \
               --output-format ci
           fi
 

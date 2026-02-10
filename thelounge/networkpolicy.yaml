@@ -11,17 +11,8 @@ spec:
     - Egress
 
   ingress:
-  ### Allow intra-namespace communication
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: irc
-  ###
-  ### Allow traffic from gateways
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: istio-system
+  ### Allow all ingress traffic (web app needs external access via gateway)
+    - {}
   ###
   egress:
   ### Allow DNS resolution
